@@ -18,9 +18,7 @@ export default {
   components: { Top, List, Bottom },
   data() {
     return {
-      todos: [
-        { id: '001', title: 'Your First Task !', complete: true },
-      ]
+      todos: JSON.parse(localStorage.getItem('todos')) || [{ id: '001', title: 'Your First Task !', complete: true }]
     }
   },
   methods: {
@@ -51,6 +49,14 @@ export default {
       this.todos = this.todos.filter((todo) => {
         return !todo.complete
       })
+    }
+  },
+  watch: {
+    todos: {
+      deep: true,
+      handler(value) {
+        localStorage.setItem('todos', JSON.stringify(value))
+      }
     }
   }
 }
